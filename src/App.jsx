@@ -1,8 +1,10 @@
-import React from 'react'
+import Loading from "./Components/Loading"
+
 
 const App = () => {
   return (
-    <div className='container mx-auto max-w-7xl'>
+    <div>
+      <Loading/>
     </div>
   )
 }
