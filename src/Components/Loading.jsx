@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const Loading = () => {
+const Loading = ({ onFinish }) => {
   const name = "SAGAR DABAS".split("");
   const letterVariants = {
     hidden: { rotateY: 90, opacity: 0 },
@@ -11,8 +11,10 @@ const Loading = () => {
     <motion.section
       initial={{ opacity: 1 }}
       animate={{ opacity: 0 }}
-      transition={{ delay: 1.5, duration: 0.8, ease: "easeInOut" }}
-      className="bg-black h-screen relative flex justify-center items-center"
+      exit={{ opacity: 0 }}
+      transition={{ delay: 1.6, duration: 0.8, ease: "easeInOut" }}
+      onAnimationComplete={onFinish}
+      className="bg-black h-screen fixed inset-0 flex justify-center items-center z-50"
     >
       <div className="flex flex-col items-center">
         {/* Name */}
@@ -20,14 +22,14 @@ const Loading = () => {
           className="text-white tracking-widest text-3xl font-michroma flex"
           initial="hidden"
           animate="visible"
-          transition={{ staggerChildren: 0.05 }} 
+          transition={{ staggerChildren: 0.05 }}
         >
           {name.map((char, index) => (
             <motion.span
               key={index}
               variants={letterVariants}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              style={{ display: "inline-block" }} 
+              style={{ display: "inline-block" }}
             >
               {char === " " ? "\u00A0" : char}
             </motion.span>
