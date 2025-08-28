@@ -1,22 +1,39 @@
 import { useState } from "react";
 import React from "react";
 import My from "../../assets/my.jpg";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { RxCross1 } from "react-icons/rx";
 import { CiMenuFries } from "react-icons/ci";
+import { FiX } from "react-icons/fi";
 
 const Navbar = () => {
-  const btns = ["projects", "me", "get started"];
   const [isOpen, setIsOpen] = useState(false);
-
   const [showToast, setShowToast] = useState(false);
+  const [contactFormOpen, setContactFormOpen] = useState(false);
+  const [showMessageToast, setShowMessageToast] = useState(false);
+
+  const openContactForm = () => setContactFormOpen(true);
+  const closeContactForm = () => setContactFormOpen(false);
 
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text).then(() => {
       setShowToast(true);
-      setTimeout(() => setShowToast(false), 2000); // hide after 2s
+      setTimeout(() => setShowToast(false), 1000); 
     });
   };
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    setContactFormOpen(false);
+    setShowMessageToast(true);
+    setTimeout(() => setShowMessageToast(false), 4000);
+  };
+
+  const btns = [
+    { label: "projects" },
+    { label: "me" },
+    { label: "get started", onClick: openContactForm },
+  ];
 
   return (
     <motion.div
@@ -31,22 +48,35 @@ const Navbar = () => {
       }}
       className="flex items-center justify-between px-5 py-2"
     >
-      {/* Toast */}
+      {/* Copied Toast */}
       {showToast && (
-        <div
+        <motion.div
           className="fixed top-5 left-1/2 -translate-x-1/2 
                      bg-[#FAD6A5] text-black text-sm px-6 py-3 
                      rounded-lg shadow-lg transition-all duration-300"
         >
           Copied!
-        </div>
+        </motion.div>
       )}
+
+      {/* Message sent Toast */}
+      {showMessageToast && (
+        <motion.div
+          className="fixed top-5 left-1/2 -translate-x-1/2 
+                     bg-[#FAD6A5] text-black text-sm px-6 py-3 
+                     rounded-lg shadow-lg transition-all duration-300"
+        >
+          Message sent!
+        </motion.div>
+      )}
+
+      {/* Logo and Name */}
       <div className="flex items-center justify-between gap-2">
         <img src={My} alt="broken image" className="h-8 w-7 rounded-full" />
         <p className="text-sm font-medium">Sagar Dabas</p>
       </div>
 
-      {/* this is the normal navbar */}
+      {/* Desktop Navbar */}
       <div className="hidden md:block">
         <div className="flex items-center justify-between gap-2">
           <button
@@ -55,18 +85,19 @@ const Navbar = () => {
           >
             Hi@dabas.dev
           </button>
-          {btns.map((label, index) => (
+          {btns.map((btn, index) => (
             <button
               key={index}
+              onClick={btn.onClick}
               className="bg-white text-sm font-normal px-4 py-[2px] rounded-md text-[#1c1b1b] hover:bg-gray-100 transition-all duration-150 shadow-[0_0_10px_rgba(0,0,0,0.9) cursor-pointer"
             >
-              {label}
+              {btn.label}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Hambergur menue */}
+      {/* Hamburger Menu */}
       <div className="block md:hidden">
         <motion.button
           initial={{ opacity: 0, x: 20 }}
@@ -100,17 +131,110 @@ const Navbar = () => {
           >
             Hi@dabas.dev
           </button>
-          {btns.map((label, index) => (
+          {btns.map((btn, index) => (
             <button
               key={index}
-              className="bg-gray-100 w-full text-left text-sm font-normal px-4 py-2 rounded-md text-[#1c1b1b] hover:bg-gray-200 transition-all duration-150"
-              onClick={() => setIsOpen(false)} // close menu on click
+              onClick={btn.onClick}
+              className="bg-white text-sm font-normal px-4 py-[2px] rounded-md text-[#1c1b1b] hover:bg-gray-100 transition-all duration-150 shadow-[0_0_10px_rgba(0,0,0,0.9) cursor-pointer"
             >
-              {label}
+              {btn.label}
             </button>
           ))}
         </motion.div>
       )}
+
+      {/* Contact Form */}
+      <AnimatePresence>
+        {contactFormOpen && (
+          <div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ dealy: 0.1 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center "
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 30 }}
+              transition={{
+                delay: 0.3,
+                duration: 0.7,
+              }}
+              className="bg-[#e8c48e] rounded-xl shadow-xl w-full max-w-md p-6 "
+            >
+              <div className="flex items-center justify-between">
+                <h1 className="text-2xl font-bold text-[#553d3a] ">
+                  Get In Touch
+                </h1>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.8 }}
+                  onClick={closeContactForm}
+                >
+                  <FiX className="h-7 w-7" />
+                </motion.button>
+              </div>
+
+              {/* Input Fields */}
+              <form className="space-y-4">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-[#553d3a] mb-1 "
+                  >
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    placeholder="Your name"
+                    className="w-full border border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#553d3a] focus:border-[#553d3a] bg-white outline-none"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-[#553d3a] mb-1 "
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="text"
+                    id="email"
+                    placeholder="Your email"
+                    className="w-full border border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#553d3a] focus:border-[#553d3a] bg-white outline-none"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-[#553d3a] mb-1 "
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    rows="4"
+                    id="message"
+                    placeholder="Leave a message"
+                    className="w-full h-32 border border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#553d3a] focus:border-[#553d3a] bg-white outline-none"
+                  />
+                </div>
+
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={handleSendMessage}
+                  className="w-full px-4 py-2 bg-gradient-to-r from-[#c09061] to-[#e9dbc6] hover:from-[#553d3a] hover:to-[#98694d] hover:text-white transition-all duration-800 rounded-lg shadow-md hover:shadow-white/60"
+                >
+                  send message
+                </motion.button>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
