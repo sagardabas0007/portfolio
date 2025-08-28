@@ -6,8 +6,17 @@ import { RxCross1 } from "react-icons/rx";
 import { CiMenuFries } from "react-icons/ci";
 
 const Navbar = () => {
-  const btns = ["about", "me", "get started"];
+  const btns = ["projects", "me", "get started"];
   const [isOpen, setIsOpen] = useState(false);
+
+  const [showToast, setShowToast] = useState(false);
+
+  const handleCopy = (text) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000); // hide after 2s
+    });
+  };
 
   return (
     <motion.div
@@ -22,6 +31,16 @@ const Navbar = () => {
       }}
       className="flex items-center justify-between px-5 py-2"
     >
+      {/* Toast */}
+      {showToast && (
+        <div
+          className="fixed top-5 left-1/2 -translate-x-1/2 
+                     bg-[#FAD6A5] text-black text-sm px-6 py-3 
+                     rounded-lg shadow-lg transition-all duration-300"
+        >
+          Copied!
+        </div>
+      )}
       <div className="flex items-center justify-between gap-2">
         <img src={My} alt="broken image" className="h-8 w-7 rounded-full" />
         <p className="text-sm font-medium">Sagar Dabas</p>
@@ -30,12 +49,12 @@ const Navbar = () => {
       {/* this is the normal navbar */}
       <div className="hidden md:block">
         <div className="flex items-center justify-between gap-2">
-          <a
-            href="#"
-            className=" hidden md:block font-extralight text-sm hover:text-gray-500 transition-all duration-100"
+          <button
+            onClick={() => handleCopy("Hi@dabas.dev")}
+            className="font-extralight text-sm hover:text-gray-500 transition-all duration-100"
           >
             Hi@dabas.dev
-          </a>
+          </button>
           {btns.map((label, index) => (
             <button
               key={index}
@@ -57,9 +76,11 @@ const Navbar = () => {
             stiffness: 200,
             damping: 20,
             delay: 2,
-            duration:0.5
+            duration: 0.5,
           }}
-          onClick={() => setIsOpen(!isOpen)} className="text-xl">
+          onClick={() => setIsOpen(!isOpen)}
+          className="text-xl"
+        >
           {isOpen ? <RxCross1 /> : <CiMenuFries />}
         </motion.button>
       </div>
@@ -73,9 +94,12 @@ const Navbar = () => {
           transition={{ duration: 0.3 }}
           className="absolute top-12 right-5 bg-white shadow-lg rounded-md flex flex-col items-start p-4 gap-3 md:hidden"
         >
-          <a href="#" className="text-sm hover:text-gray-500">
+          <button
+            onClick={() => handleCopy("Hi@dabas.dev")}
+            className="text-sm font-extralight hover:text-gray-500"
+          >
             Hi@dabas.dev
-          </a>
+          </button>
           {btns.map((label, index) => (
             <button
               key={index}
