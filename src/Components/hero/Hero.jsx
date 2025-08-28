@@ -2,6 +2,7 @@ import React from "react";
 import { FaInstagram, FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { motion } from "framer-motion";
+import Projects from "../my-projects/Projects";
 
 const Hero = () => {
   const text = "I'm a developer crafting thoughtful digital solutions";
@@ -112,7 +113,7 @@ const Hero = () => {
           duration: 0.3,
         }}
       >
-        <hr class=" border-gray-300 w-[600px] mt-7" />
+        <hr class=" border-gray-300 w-64 md:w-[600px] mt-7" />
       </motion.div>
 
       <motion.div
@@ -135,6 +136,10 @@ const Hero = () => {
           </a>
         </div>
       </motion.div>
+
+      <section>
+        <Projects/>
+      </section>
     </div>
   );
 };
