@@ -6,11 +6,38 @@ import { RxCross1 } from "react-icons/rx";
 import { CiMenuFries } from "react-icons/ci";
 import { FiX } from "react-icons/fi";
 
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [contactFormOpen, setContactFormOpen] = useState(false);
   const [showMessageToast, setShowMessageToast] = useState(false);
+  const [_, setResult] = React.useState("");
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setResult("Sending....");
+    const formData = new FormData(event.target);
+    console.log(formData);
+    formData.append("access_key", "74d38d5a-8ae3-4174-88e8-a80ed8592bf6");
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      setResult("Form Submitted Successfully");
+      event.target.reset();
+      handleSendMessage();
+    } else {
+      console.log("Error", data);
+      setResult(data.message);
+    }
+  };
+
 
   const openContactForm = () => setContactFormOpen(true);
   const closeContactForm = () => setContactFormOpen(false);
@@ -22,8 +49,7 @@ const Navbar = () => {
     });
   };
 
-  const handleSendMessage = (e) => {
-    e.preventDefault();
+  const handleSendMessage = () => {
     setContactFormOpen(false);
     setShowMessageToast(true);
     setTimeout(() => setShowMessageToast(false), 4000);
@@ -177,7 +203,7 @@ const Navbar = () => {
               </div>
 
               {/* Input Fields */}
-              <form className="space-y-4">
+              <form onSubmit={onSubmit} className="space-y-4">
                 <div>
                   <label
                     htmlFor="name"
@@ -188,6 +214,7 @@ const Navbar = () => {
                   <input
                     type="text"
                     id="name"
+                    name="name"
                     placeholder="Your name"
                     className="w-full border border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#553d3a] focus:border-[#553d3a] bg-[#F2E5D9] outline-none"
                   />
@@ -202,6 +229,7 @@ const Navbar = () => {
                   <input
                     type="text"
                     id="email"
+                    name="email"
                     placeholder="Your email"
                     className="w-full border border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#553d3a] focus:border-[#553d3a] bg-[#F2E5D9] outline-none"
                   />
@@ -216,6 +244,7 @@ const Navbar = () => {
                   <textarea
                     rows="4"
                     id="message"
+                    name="message"
                     placeholder="Leave a message"
                     className="w-full h-32 border border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#553d3a] focus:border-[#553d3a] bg-[#F2E5D9] outline-none"
                   />
@@ -225,7 +254,6 @@ const Navbar = () => {
                   type="submit"
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  onClick={handleSendMessage}
                   className="w-full px-4 py-2 bg-gradient-to-r from-[#c09061] to-[#e9dbc6] hover:from-[#553d3a] hover:to-[#98694d] hover:text-white transition-all duration-800 rounded-lg shadow-md hover:shadow-white/60"
                 >
                   send message
