@@ -110,7 +110,7 @@ const Projects = () => {
                 whileHover={{ scale: 1.02, backgroundColor: "#F9C673" }}
                 whileTap={{ scale: 0.98 }}
               >
-                View Case study <FaArrowRight className="transform transition-all duration-300 group-hover:-rotate-45" />
+                live demo <FaArrowRight className="transform transition-all duration-300 group-hover:-rotate-45" />
               </motion.button>
             </motion.div>
           </motion.div>
