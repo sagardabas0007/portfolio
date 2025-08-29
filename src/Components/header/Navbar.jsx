@@ -148,7 +148,7 @@ const Navbar = () => {
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -50 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.1 }}
           className="absolute top-12 right-5 bg-white shadow-lg rounded-md flex flex-col items-start p-4 gap-3 md:hidden"
         >
           <button
@@ -185,7 +185,7 @@ const Navbar = () => {
               exit={{ opacity: 0, scale: 0.8, y: 30 }}
               transition={{
                 delay: 0.3,
-                duration: 0.7,
+                duration: 0.3,
               }}
               className="bg-[#e8c48e] rounded-xl shadow-xl w-full max-w-md p-6 "
             >
