@@ -189,7 +189,7 @@ const Navbar = () => {
                     type="text"
                     id="name"
                     placeholder="Your name"
-                    className="w-full border border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#553d3a] focus:border-[#553d3a] bg-white outline-none"
+                    className="w-full border border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#553d3a] focus:border-[#553d3a] bg-[#F2E5D9] outline-none"
                   />
                 </div>
                 <div>
@@ -203,7 +203,7 @@ const Navbar = () => {
                     type="text"
                     id="email"
                     placeholder="Your email"
-                    className="w-full border border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#553d3a] focus:border-[#553d3a] bg-white outline-none"
+                    className="w-full border border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#553d3a] focus:border-[#553d3a] bg-[#F2E5D9] outline-none"
                   />
                 </div>
                 <div>
@@ -217,7 +217,7 @@ const Navbar = () => {
                     rows="4"
                     id="message"
                     placeholder="Leave a message"
-                    className="w-full h-32 border border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#553d3a] focus:border-[#553d3a] bg-white outline-none"
+                    className="w-full h-32 border border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#553d3a] focus:border-[#553d3a] bg-[#F2E5D9] outline-none"
                   />
                 </div>
 
