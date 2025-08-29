@@ -58,7 +58,7 @@ const Navbar = () => {
   const btns = [
     { label: "projects" },
     { label: "me" },
-    { label: "send me a message", onClick: openContactForm },
+    { label: "shoot me a text", onClick: openContactForm },
   ];
 
   return (
